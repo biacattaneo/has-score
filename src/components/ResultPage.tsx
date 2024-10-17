@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
-import type { LoanResult } from "../interfaces/LoanResult.interface";
 
+interface LoanResult {
+  status: string;
+  max_amount?: number;
+}
 
 const ResultPage: React.FC = () => {
   const [loanResult, setLoanResult] = useState<LoanResult | null>(null);

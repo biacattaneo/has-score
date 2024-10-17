@@ -1,6 +1,18 @@
 import React, { useState } from "react";
-import type { FormData } from "../interfaces/FormData.interface";
-import type { ValidationErrors } from "../interfaces/ValidationErrors.interface";
+
+interface FormData {
+  name: string;
+  age: number;
+  income: number;
+  city: string;
+}
+
+interface ValidationErrors {
+  name?: string;
+  age?: string;
+  income?: string;
+  city?: string;
+}
 
 const Form: React.FC<{ onSubmit: (data: FormData) => void }> = ({
   onSubmit,

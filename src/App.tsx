@@ -32,12 +32,12 @@ const App: React.FC = () => {
 };
 
 const AppWrapper: React.FC = () => (
-  <Router>
+  // <Router>
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/result" element={<ResultPage />} />
     </Routes>
-  </Router>
+  // </Router>
 );
 
 export default AppWrapper;

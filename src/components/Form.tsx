@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import './Form.scss'
+import "./Form.scss";
 import type { ValidationErrors } from "../interfaces/ValidationErrors.interface";
 import type { FormData } from "../interfaces/FormData.interface";
 import CurrencyInput from "react-currency-input-field";
+import { Alert, Snackbar } from "@mui/material";
+
 
 const Form: React.FC<{ onSubmit: (data: FormData) => void }> = ({
   onSubmit,
@@ -14,6 +16,11 @@ const Form: React.FC<{ onSubmit: (data: FormData) => void }> = ({
     city: "",
   });
   const [errors, setErrors] = useState<ValidationErrors>({});
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState<string>("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState<"error" | "success">(
+    "error"
+  );
 
   const validate = (): boolean => {
     const currentErrors: ValidationErrors = {};
@@ -24,15 +31,31 @@ const Form: React.FC<{ onSubmit: (data: FormData) => void }> = ({
     if (formData.income <= 0)
       currentErrors.income = "Renda mensal deve ser maior que 0";
     if (!formData.city) currentErrors.city = "Cidade não pode ser vazia";
+
     setErrors(currentErrors);
-    return Object.keys(currentErrors).length === 0;
+
+    if (Object.keys(currentErrors).length > 0) {
+      setSnackbarMessage(Object.values(currentErrors).join(" | "));
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
+      return false;
+    }
+
+    return true;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
       onSubmit(formData);
+      setSnackbarMessage("Formulário enviado com sucesso!");
+      setSnackbarSeverity("success");
+      setSnackbarOpen(true);
     }
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -45,7 +68,6 @@ const Form: React.FC<{ onSubmit: (data: FormData) => void }> = ({
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           />
-          {errors.name && <p>{errors.name}</p>}
         </div>
         <div className="form-field">
           <label>Idade:</label>
@@ -56,28 +78,20 @@ const Form: React.FC<{ onSubmit: (data: FormData) => void }> = ({
               setFormData({ ...formData, age: parseInt(e.target.value) })
             }
           />
-          {errors.age && <p>{errors.age}</p>}
         </div>
         <div className="form-field">
           <label>Renda Mensal:</label>
-          {/* <input
-            type="number"
-            value={formData.income}
-            onChange={(e) =>
-              setFormData({ ...formData, income: parseFloat(e.target.value) })
-            }
-          /> */}
           <CurrencyInput
             placeholder="3000,00"
-            prefix="R$" //TODO: change by country
+            prefix="R$"
             defaultValue={1000}
             decimalsLimit={2}
             decimalSeparator=","
             groupSeparator="."
-            onValueChange={(e) =>
-              setFormData({ ...formData, income: e.target.value })
-            }/>
-          {errors.income && <p>{errors.income}</p>}
+            onValueChange={(value) =>
+              setFormData({ ...formData, income: parseFloat(value || "0") })
+            }
+          />
         </div>
         <div className="form-field">
           <label>Cidade:</label>
@@ -86,12 +100,25 @@ const Form: React.FC<{ onSubmit: (data: FormData) => void }> = ({
             value={formData.city}
             onChange={(e) => setFormData({ ...formData, city: e.target.value })}
           />
-          {errors.city && <p>{errors.city}</p>}
         </div>
         <div className="form-btn-send">
           <button type="submit">Enviar</button>
         </div>
       </form>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbarSeverity}
+          sx={{ width: "100%" }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

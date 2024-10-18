@@ -15,6 +15,7 @@ const Form: React.FC<{ onSubmit: (data: FormData) => void }> = ({
     income: 0,
     city: "",
   });
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [errors, setErrors] = useState<ValidationErrors>({});
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState<string>("");
@@ -25,17 +26,17 @@ const Form: React.FC<{ onSubmit: (data: FormData) => void }> = ({
   const validate = (): boolean => {
     const currentErrors: ValidationErrors = {};
     if (formData.name.length < 8)
-      currentErrors.name = "Nome deve ter mais de 8 caracteres";
+      currentErrors.name = "Nome deve ter mais de 8 caracteres.";
     if (formData.age < 18 || formData.age > 65)
-      currentErrors.age = "Idade deve estar entre 18 e 65 anos";
+      currentErrors.age = "Idade deve estar entre 18 e 65 anos.";
     if (formData.income <= 0)
-      currentErrors.income = "Renda mensal deve ser maior que 0";
-    if (!formData.city) currentErrors.city = "Cidade não pode ser vazia";
+      currentErrors.income = "Renda mensal deve ser maior que 0.";
+    if (!formData.city) currentErrors.city = "Cidade não pode ser vazia.";
 
     setErrors(currentErrors);
 
     if (Object.keys(currentErrors).length > 0) {
-      setSnackbarMessage(Object.values(currentErrors).join(" | "));
+      setSnackbarMessage(Object.values(currentErrors).join("\n"));
       setSnackbarSeverity("error");
       setSnackbarOpen(true);
       return false;
@@ -115,7 +116,7 @@ const Form: React.FC<{ onSubmit: (data: FormData) => void }> = ({
         <Alert
           onClose={handleCloseSnackbar}
           severity={snackbarSeverity}
-          sx={{ width: "100%" }}>
+          sx={{ width: "100%", whiteSpace: "pre-line" }}>
           {snackbarMessage}
         </Alert>
       </Snackbar>

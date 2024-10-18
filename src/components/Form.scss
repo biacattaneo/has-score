@@ -36,9 +36,12 @@
 
 .btn-form {
     display: flex;
-    font-weight: bold;
     justify-content: center;
     width: 100%;
+    
+    button {
+        font-weight: bold;
+    }
 }
 
 .form-container button:hover {

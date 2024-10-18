@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./ResultPage.scss"
 
 interface LoanResult {
   status: string;
@@ -18,7 +19,7 @@ const ResultPage: React.FC = () => {
   if (!loanResult) return <p>Carregando...</p>;
 
   return (
-    <div>
+    <div className="result-container">
       {loanResult.status === "APPROVED" ? (
         <p>
           Parabéns! Seu empréstimo foi aprovado. O valor máximo é: R${" "}

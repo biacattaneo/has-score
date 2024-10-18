@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-} from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Form from "./components/Form";
 import { mockLoanAPI } from "./services/validationCredit.service";
 import ResultPage from "./components/ResultPage";
@@ -24,7 +19,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="App">
+    <div className="app-container">
       <h1>Empréstimo</h1>
       <Form onSubmit={handleSubmit} />
     </div>
@@ -32,12 +27,10 @@ const App: React.FC = () => {
 };
 
 const AppWrapper: React.FC = () => (
-  // <Router>
-    <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="/result" element={<ResultPage />} />
-    </Routes>
-  // </Router>
+  <Routes>
+    <Route path="/" element={<App />} />
+    <Route path="/result" element={<ResultPage />} />
+  </Routes>
 );
 
 export default AppWrapper;

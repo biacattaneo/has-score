@@ -1,8 +1,8 @@
 export const mockLoanAPI = async (income: number): Promise<{ status: string, max_amount?: number }> => {
     return new Promise((resolve) => {
         setTimeout(() => {
-            if (income > 3000) {
-                resolve({ status: 'APPROVED', max_amount: 10000 });
+            if (income > 0) {
+                resolve({ status: 'APPROVED', max_amount: income });
             } else {
                 resolve({ status: 'DENIED' });
             }

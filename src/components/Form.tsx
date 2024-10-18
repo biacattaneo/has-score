@@ -1,18 +1,8 @@
 import React, { useState } from "react";
-
-interface FormData {
-  name: string;
-  age: number;
-  income: number;
-  city: string;
-}
-
-interface ValidationErrors {
-  name?: string;
-  age?: string;
-  income?: string;
-  city?: string;
-}
+import './Form.scss'
+import type { ValidationErrors } from "../interfaces/ValidationErrors.interface";
+import type { FormData } from "../interfaces/FormData.interface";
+import CurrencyInput from "react-currency-input-field";
 
 const Form: React.FC<{ onSubmit: (data: FormData) => void }> = ({
   onSubmit,
@@ -46,49 +36,63 @@ const Form: React.FC<{ onSubmit: (data: FormData) => void }> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Nome:</label>
-        <input
-          type="text"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-        />
-        {errors.name && <p>{errors.name}</p>}
-      </div>
-      <div>
-        <label>Idade:</label>
-        <input
-          type="number"
-          value={formData.age}
-          onChange={(e) =>
-            setFormData({ ...formData, age: parseInt(e.target.value) })
-          }
-        />
-        {errors.age && <p>{errors.age}</p>}
-      </div>
-      <div>
-        <label>Renda Mensal:</label>
-        <input
-          type="number"
-          value={formData.income}
-          onChange={(e) =>
-            setFormData({ ...formData, income: parseFloat(e.target.value) })
-          }
-        />
-        {errors.income && <p>{errors.income}</p>}
-      </div>
-      <div>
-        <label>Cidade:</label>
-        <input
-          type="text"
-          value={formData.city}
-          onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-        />
-        {errors.city && <p>{errors.city}</p>}
-      </div>
-      <button type="submit">Enviar</button>
-    </form>
+    <div className="form-container">
+      <form onSubmit={handleSubmit}>
+        <div className="form-field">
+          <label>Nome Completo:</label>
+          <input
+            type="text"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          />
+          {errors.name && <p>{errors.name}</p>}
+        </div>
+        <div className="form-field">
+          <label>Idade:</label>
+          <input
+            type="number"
+            value={formData.age}
+            onChange={(e) =>
+              setFormData({ ...formData, age: parseInt(e.target.value) })
+            }
+          />
+          {errors.age && <p>{errors.age}</p>}
+        </div>
+        <div className="form-field">
+          <label>Renda Mensal:</label>
+          {/* <input
+            type="number"
+            value={formData.income}
+            onChange={(e) =>
+              setFormData({ ...formData, income: parseFloat(e.target.value) })
+            }
+          /> */}
+          <CurrencyInput
+            placeholder="3000,00"
+            prefix="R$" //TODO: change by country
+            defaultValue={1000}
+            decimalsLimit={2}
+            decimalSeparator=","
+            groupSeparator="."
+            onValueChange={(e) =>
+              setFormData({ ...formData, income: e.target.value })
+            }/>
+          {errors.income && <p>{errors.income}</p>}
+        </div>
+        <div className="form-field">
+          <label>Cidade:</label>
+          <input
+            type="text"
+            value={formData.city}
+            onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+          />
+          {errors.city && <p>{errors.city}</p>}
+        </div>
+        <div className="form-btn-send">
+          <button type="submit">Enviar</button>
+        </div>
+      </form>
+    </div>
   );
 };
 

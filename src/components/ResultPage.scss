@@ -17,3 +17,19 @@
   font-size: large;
   color: #333;
 }
+
+.result-btn{
+    display: flex;
+    font-weight: bold;
+    justify-content: center;
+    width: 100%;
+    // background-color: red; 
+    align-items: center;
+    padding: 16px;
+
+    button {
+        font-weight: bold;
+        background-color: #F8F8FF;
+        width: 100%;
+    }
+}

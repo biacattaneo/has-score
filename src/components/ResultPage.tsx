@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 
 
 const ResultPage: React.FC = () => {
-  // const [loanResult, setLoanResult] = useState<LoanResult | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [formData, setFormData] = useRecoilState<LoanResult>(formState);
   const [remainingTime, setRemainingTime] = useState(0)
@@ -16,7 +15,7 @@ const ResultPage: React.FC = () => {
 
 
   useEffect(() => {
-    const totalIntervalInSeconds = 15 * 60; // 15 min -> trocar para um tempo menor para testes
+    const totalIntervalInSeconds = 3 * 60; // 3 min -> trocar para um tempo maior em prod
 
     const date = new Date(formData.date);
     const currentDate = new Date();

@@ -32,6 +32,10 @@ Iniciar Servidor
 ```
 ### Documentation
 
+O tempo padrão de espera para uma nova simulação é de 3 minutos.
+
+------------------------------------------------------
+
 Este projeto funciona com uma API de retorno Mockado. Para se conectar com um backend real é necessário fazer uma conexão com a API utilizando como fetch ou axios. Exemplo utilizando axios:
 
 ```
